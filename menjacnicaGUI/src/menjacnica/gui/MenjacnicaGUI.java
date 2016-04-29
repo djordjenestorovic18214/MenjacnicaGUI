@@ -253,6 +253,7 @@ public class MenjacnicaGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					izvrsiZamenu();
 				}
 			});
 		}
@@ -326,6 +327,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmIzvrsiZamenu() {
 		if (mntmIzvrsiZamenu == null) {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
+			mntmIzvrsiZamenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					izvrsiZamenu();
+				}
+			});
 		}
 		return mntmIzvrsiZamenu;
 	}
@@ -337,8 +343,20 @@ public class MenjacnicaGUI extends JFrame {
 	}
 	
 	public static void dodajKurs() {
-		DodajKursGUI dk = new DodajKursGUI();
-		dk.setVisible(true);
+			try {
+				DodajKursGUI dk = new DodajKursGUI();
+				dk.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+	public static void izvrsiZamenu() {
+			try {
+				IzvrsiZamenuGUI iz = new IzvrsiZamenuGUI();
+				iz.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 	}
 	public static void ispisiStatus(String tekst) {
 		textArea.append(tekst + "\n");
