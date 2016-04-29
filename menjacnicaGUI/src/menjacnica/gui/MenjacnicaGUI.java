@@ -58,7 +58,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JPanel eastPanel;
 	private JPanel southPanel;
 	private JScrollPane scrollPane;
-	private JTextArea textArea;
+	private static	JTextArea textArea;
 	private JButton btnDodajKurs;
 	private JButton btnIzbrisiKurs;
 	private JButton btnIzvrsiZamenu;
@@ -99,7 +99,7 @@ public class MenjacnicaGUI extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenjacnicaGUI.class.getResource("/icons/31012012ms-office-icon.png")));
 		setTitle("Menjacnica");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 785, 544);
 		setJMenuBar(getMenuBar_1());
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		getContentPane().add(getPanel_1(), BorderLayout.EAST);
@@ -140,7 +140,7 @@ public class MenjacnicaGUI extends JFrame {
 					int opcija = fc.showOpenDialog(null);
 					if(opcija == JFileChooser.APPROVE_OPTION) {
 						File file = fc.getSelectedFile();
-						textArea.append("Ucitan fajl: " + file.getAbsolutePath() + "\n");
+						ispisiStatus("Ucitan fajl: " + file.getAbsolutePath());
 					}
 				}
 			});
@@ -158,7 +158,7 @@ public class MenjacnicaGUI extends JFrame {
 					int opcija = fc.showSaveDialog(null);
 					if(opcija == JFileChooser.APPROVE_OPTION) {
 						File file = fc.getSelectedFile();
-						textArea.append("Sacuvan fajl: " + file.getAbsolutePath() + "\n");
+						ispisiStatus("Sacuvan fajl: " + file.getAbsolutePath());
 					}
 				}
 			});
@@ -224,6 +224,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JTextArea getTextArea_1() {
 		if (textArea == null) {
 			textArea = new JTextArea();
+			textArea.setEditable(false);
 			textArea.setBackground(Color.WHITE);
 			textArea.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "STATUS", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			textArea.setDragEnabled(true);
@@ -233,6 +234,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
+			btnDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dodajKurs();
+				}
+			});
 		}
 		return btnDodajKurs;
 	}
@@ -303,6 +309,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem getMntmDodajKurs() {
 		if (mntmDodajKurs == null) {
 			mntmDodajKurs = new JMenuItem("Dodaj kurs");
+			mntmDodajKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					dodajKurs();
+				}
+			});
 		}
 		return mntmDodajKurs;
 	}
@@ -325,4 +336,11 @@ public class MenjacnicaGUI extends JFrame {
 			System.exit(0);
 	}
 	
+	public static void dodajKurs() {
+		DodajKursGUI dk = new DodajKursGUI();
+		dk.setVisible(true);
+	}
+	public static void ispisiStatus(String tekst) {
+		textArea.append(tekst + "\n");
+	}
 }
