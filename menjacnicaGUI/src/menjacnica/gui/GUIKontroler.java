@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import menjacnica.Kurs;
 import menjacnica.Menjacnica;
+import menjacnica.gui.models.KursTableModel;
 
 public class GUIKontroler {
 	
@@ -123,5 +124,49 @@ public class GUIKontroler {
 		DodajKursGUI.txtKupovniKurs.setText("");
 		DodajKursGUI.txtSrednjiKurs.setText("");
 		DodajKursGUI.txtSkraceniNaziv.setText("");
+	}
+
+	public static void izbrisiKurs() {
+		int indeks = MenjacnicaGUI.table.getSelectedRow();
+		if(indeks == -1){
+			GUIKontroler.upozorenjeOSelekcijiReda();
+		}else{
+			int opcija = JOptionPane.showConfirmDialog(null, "Da li ste sigurni da zelite da obrisete ovaj kurs?",
+					"Upozorenje", JOptionPane.YES_NO_OPTION);
+			if(opcija == JOptionPane.YES_OPTION){
+				KursTableModel model = (KursTableModel) MenjacnicaGUI.table.getModel();
+				Kurs k = model.vratiKurs(indeks);
+				GUIKontroler.obrisiKurs(k);
+				ispisiStatus("Obrisan je red sa indeksom " + indeks);
+				JOptionPane.showMessageDialog(prozor.getContentPane(), "Kurs uspesno obrisan!", 
+						"Obavestenje", JOptionPane.INFORMATION_MESSAGE);		
+			}
+		}
+	}
+
+	private static void upozorenjeOSelekcijiReda() {
+		JOptionPane.showMessageDialog(prozor.getContentPane(), "Izaberite kurs u tabeli koji zelite da obrisete!",
+				"Greska", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public static void zamena() {
+		String valuta = (String) IzvrsiZamenuGUI.cbValuta.getSelectedItem();
+		if(valuta != "EUR" && valuta != "USD" && valuta != "CHF") {
+			JOptionPane.showMessageDialog(null, "Morate izabrati valutu");
+			return;
+	}
+		int iznos = Integer.parseInt(IzvrsiZamenuGUI.txtIznos.getText());
+		String radnja;
+		if(IzvrsiZamenuGUI.rdbtnKupovina.isSelected())
+			radnja = "Kupovina";
+		else if(IzvrsiZamenuGUI.rdbtnProdaja.isSelected())
+			radnja = "Prodaja";
+		else {
+			JOptionPane.showMessageDialog(null, "Morate izabrati izmedju kupovine i prodaje!");
+			return;
+		}
+		
+		String status = "Valuta: " + valuta + "; Iznos: " + iznos + "; Vrsta transakcije: " + radnja + ".";
+		GUIKontroler.ispisiStatus(status);
 	}
 }

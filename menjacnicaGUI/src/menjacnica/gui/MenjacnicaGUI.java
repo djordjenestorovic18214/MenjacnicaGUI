@@ -67,7 +67,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton btnIzbrisiKurs;
 	private JButton btnIzvrsiZamenu;
 	private JScrollPane scrollPane_1;
-	private static JTable table;
+	static JTable table;
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmDodajKurs;
 	private JMenuItem mntmIzbrisiKurs;
@@ -178,7 +178,7 @@ public class MenjacnicaGUI extends JFrame {
 			eastPanel.setName("");
 			eastPanel.setLayout(new MigLayout("", "[83px]", "[23px][][]"));
 			eastPanel.add(getBtnDodajKurs(), "cell 0 0,growx,aligny top");
-			eastPanel.add(getBtnIzbrisiKurs(), "cell 0 1,growx,aligny top");
+			eastPanel.add(getBtnIzbrisiKurs(), "cell 0 1,growx");
 			eastPanel.add(getBtnIzvrsiZamenu(), "cell 0 2,alignx left,aligny top");
 		}
 		return eastPanel;
@@ -223,6 +223,11 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton getBtnIzbrisiKurs() {
 		if (btnIzbrisiKurs == null) {
 			btnIzbrisiKurs = new JButton("Izbrisi kurs");
+			btnIzbrisiKurs.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					GUIKontroler.izbrisiKurs();
+				}
+			});
 		}
 		return btnIzbrisiKurs;
 	}

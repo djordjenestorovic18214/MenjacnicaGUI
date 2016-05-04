@@ -54,6 +54,10 @@ public class KursTableModel extends AbstractTableModel{
 		fireTableDataChanged();
 	}
 	
+	public Kurs vratiKurs(int indeks){
+		return kursevi.get(indeks);
+	}
+	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;

@@ -29,12 +29,12 @@ public class IzvrsiZamenuGUI extends JFrame {
 	private JLabel lblProdajniKurs;
 	private static JTextField txtKupovniKurs;
 	private static JTextField txtProdajniKurs;
-	private static JComboBox cbValuta;
+	static JComboBox cbValuta;
 	private JLabel lblIznos;
 	private JLabel lblVrstaTransakcije;
-	private JTextField txtIznos;
-	private static JRadioButton rdbtnKupovina;
-	private static JRadioButton rdbtnProdaja;
+	static JTextField txtIznos;
+	static JRadioButton rdbtnKupovina;
+	static JRadioButton rdbtnProdaja;
 	private JSlider slider;
 	private JButton btnIzvrsiZamenu;
 	private JButton btnOdustani;
@@ -203,24 +203,7 @@ public class IzvrsiZamenuGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String valuta = (String) cbValuta.getSelectedItem();
-					if(valuta != "EUR" && valuta != "USD" && valuta != "CHF") {
-						JOptionPane.showMessageDialog(null, "Morate izabrati valutu");
-						return;
-				}
-					int iznos = Integer.parseInt(txtIznos.getText());
-					String radnja;
-					if(rdbtnKupovina.isSelected())
-						radnja = "Kupovina";
-					else if(rdbtnProdaja.isSelected())
-						radnja = "Prodaja";
-					else {
-						JOptionPane.showMessageDialog(null, "Morate izabrati izmedju kupovine i prodaje!");
-						return;
-					}
-					
-					String status = "Valuta: " + valuta + "; Iznos: " + iznos + "; Prodaja/Kupovina: " + radnja + ".";
-					GUIKontroler.ispisiStatus(status);
+					GUIKontroler.zamena();
 				}
 			});
 			btnIzvrsiZamenu.setBounds(17, 235, 170, 28);
