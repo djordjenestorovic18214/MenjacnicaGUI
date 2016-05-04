@@ -6,9 +6,11 @@ public class Menjacnica {
 	LinkedList<Kurs> kursevi;
 
 	public Menjacnica(LinkedList<Kurs> kursevi) {
-		if(kursevi != null)
 			this.kursevi = kursevi;
-		kursevi = new LinkedList<Kurs>(); 
+	}
+	
+	public Menjacnica(){
+		kursevi = new LinkedList<>();
 	}
 	
 	public void dodajKurs(Kurs kurs) {

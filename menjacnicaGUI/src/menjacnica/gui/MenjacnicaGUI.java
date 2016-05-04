@@ -35,6 +35,10 @@ import javax.swing.JTable;
 import javax.swing.border.MatteBorder;
 import java.awt.Point;
 import javax.swing.table.DefaultTableModel;
+
+import menjacnica.Menjacnica;
+import menjacnica.gui.models.KursTableModel;
+
 import javax.swing.KeyStroke;
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
@@ -63,7 +67,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JButton btnIzbrisiKurs;
 	private JButton btnIzvrsiZamenu;
 	private JScrollPane scrollPane_1;
-	private JTable table;
+	private static JTable table;
 	private JPopupMenu popupMenu;
 	private JMenuItem mntmDodajKurs;
 	private JMenuItem mntmIzbrisiKurs;
@@ -191,11 +195,11 @@ public class MenjacnicaGUI extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setMinimumSize(new Dimension(23, 70));
-			scrollPane.setViewportView(getTextArea());
+			scrollPane.setViewportView(getTaStatus());
 		}
 		return scrollPane;
 	}
-	private JTextArea getTextArea() {
+	private JTextArea getTaStatus() {
 		if (taStatus == null) {
 			taStatus = new JTextArea();
 			taStatus.setEditable(false);
@@ -210,7 +214,7 @@ public class MenjacnicaGUI extends JFrame {
 			btnDodajKurs = new JButton("Dodaj kurs");
 			btnDodajKurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.dodajKurs();
+					GUIKontroler.pokreniDodajKursProzor();
 				}
 			});
 		}
@@ -227,7 +231,7 @@ public class MenjacnicaGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.izvrsiZamenu();
+					GUIKontroler.pokreniIzvrsiZamenuProzor();
 				}
 			});
 		}
@@ -243,13 +247,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JTable getTable() {
 		if (table == null) {
 			table = new JTable();
-			table.setModel(new DefaultTableModel(
-				new Object[][] {
-				},
-				new String[] {
-					"", "", "", "", "", ""
-				}
-			));
+			table.setModel(new KursTableModel(GUIKontroler.vratiListuKurseva()));
 			table.setFillsViewportHeight(true);
 			addPopup(table, getPopupMenu());
 		}
@@ -286,7 +284,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmDodajKurs = new JMenuItem("Dodaj kurs");
 			mntmDodajKurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.dodajKurs();
+					GUIKontroler.pokreniDodajKursProzor();
 				}
 			});
 		}
@@ -303,14 +301,15 @@ public class MenjacnicaGUI extends JFrame {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
 			mntmIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					GUIKontroler.izvrsiZamenu();
+					GUIKontroler.pokreniIzvrsiZamenuProzor();
 				}
 			});
 		}
 		return mntmIzvrsiZamenu;
 	}
 	
-
-	
-
+	public void osveziTabelu() {
+		KursTableModel model = (KursTableModel) table.getModel();
+		model.staviKurseveUModel(GUIKontroler.vratiListuKurseva());
+	}
 }

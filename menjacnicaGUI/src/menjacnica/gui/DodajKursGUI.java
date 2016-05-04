@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import menjacnica.Kurs;
 import net.miginfocom.swing.MigLayout;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -18,18 +20,18 @@ public class DodajKursGUI extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblSifra;
-	private JTextField txtSifra;
+	static JTextField txtSifra;
 	private JLabel lblProdajniKurs;
-	private JTextField txtProdajniKurs;
+	static JTextField txtProdajniKurs;
 	private JLabel lblSrednjiKurs;
-	private JTextField txtSrednjiKurs;
+	static JTextField txtSrednjiKurs;
 	private JButton btnDodaj;
 	private JLabel lblNaziv;
-	private JTextField txtNaziv;
+	static JTextField txtNaziv;
 	private JLabel lblKupovniKurs;
-	private JTextField txtKupovniKurs;
+	static JTextField txtKupovniKurs;
 	private JLabel lblSkraceniNaziv;
-	private JTextField txtSkraceniNaziv;
+	static JTextField txtSkraceniNaziv;
 	private JButton btnOdustani;
 
 	/**
@@ -103,16 +105,7 @@ public class DodajKursGUI extends JFrame {
 			btnDodaj = new JButton("Dodaj");
 			btnDodaj.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					int sifra = Integer.parseInt(txtSifra.getText());
-					String naziv = txtNaziv.getText();
-					double prodajniKurs = Double.parseDouble(txtProdajniKurs.getText());
-					double kupovniKurs = Double.parseDouble(txtKupovniKurs.getText());
-					double srednjiKurs = Double.parseDouble(txtSrednjiKurs.getText());
-					String skraceniNaziv = txtSkraceniNaziv.getText();
-					
-					String dodajKurs = "Sifra: " + sifra + "; Naziv: " + naziv + "; Prodajni kurs: " + prodajniKurs
-							 + "; Kupovni kurs: "+ kupovniKurs + "; Srednji kurs: " + srednjiKurs + "; Skraceni naziv: " + skraceniNaziv + ".";
-					GUIKontroler.ispisiStatus(dodajKurs);
+				GUIKontroler.dodaj();
 				}
 			});
 		}
