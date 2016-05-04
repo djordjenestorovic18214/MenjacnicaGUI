@@ -58,7 +58,7 @@ public class MenjacnicaGUI extends JFrame {
 	private JPanel eastPanel;
 	private JPanel southPanel;
 	private JScrollPane scrollPane;
-	private static	JTextArea textArea;
+	static	JTextArea taStatus;
 	private JButton btnDodajKurs;
 	private JButton btnIzbrisiKurs;
 	private JButton btnIzvrsiZamenu;
@@ -69,21 +69,8 @@ public class MenjacnicaGUI extends JFrame {
 	private JMenuItem mntmIzbrisiKurs;
 	private JMenuItem mntmIzvrsiZamenu;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MenjacnicaGUI frame = new MenjacnicaGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
+
 
 	/**
 	 * Create the frame.
@@ -92,7 +79,7 @@ public class MenjacnicaGUI extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				ugasiAplikaciju();
+				GUIKontroler.ugasiAplikaciju();
 			}
 		});
 		
@@ -136,12 +123,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmOpen = new JMenuItem("Open");
 			mntmOpen.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					JFileChooser fc = new JFileChooser();
-					int opcija = fc.showOpenDialog(null);
-					if(opcija == JFileChooser.APPROVE_OPTION) {
-						File file = fc.getSelectedFile();
-						ispisiStatus("Ucitan fajl: " + file.getAbsolutePath());
-					}
+					GUIKontroler.ucitaj();
 				}
 			});
 			mntmOpen.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
@@ -154,12 +136,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmSave = new JMenuItem("Save");
 			mntmSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					JFileChooser fc = new JFileChooser();
-					int opcija = fc.showSaveDialog(null);
-					if(opcija == JFileChooser.APPROVE_OPTION) {
-						File file = fc.getSelectedFile();
-						ispisiStatus("Sacuvan fajl: " + file.getAbsolutePath());
-					}
+					GUIKontroler.sacuvaj();
 				}
 			});
 			mntmSave.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/com/sun/java/swing/plaf/windows/icons/FloppyDrive.gif")));
@@ -172,7 +149,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmExit = new JMenuItem("Exit");
 			mntmExit.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ugasiAplikaciju();
+					GUIKontroler.ugasiAplikaciju();
 				}
 			});
 			mntmExit.setIcon(new ImageIcon(MenjacnicaGUI.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
@@ -185,10 +162,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmAbout = new JMenuItem("About");
 			mntmAbout.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(null, "Autor: Djordje Nestorovic \n"
-							+ "Studira na: Fakultet Organizacionih Nauka \n"
-							+ "Datum rodjenja: 25.09.1995. \n"
-							+ "Broj indeksa: 0182/2014 \n");
+					GUIKontroler.about();
 				}
 			});
 		}
@@ -217,26 +191,26 @@ public class MenjacnicaGUI extends JFrame {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setMinimumSize(new Dimension(23, 70));
-			scrollPane.setViewportView(getTextArea_1());
+			scrollPane.setViewportView(getTextArea());
 		}
 		return scrollPane;
 	}
-	private JTextArea getTextArea_1() {
-		if (textArea == null) {
-			textArea = new JTextArea();
-			textArea.setEditable(false);
-			textArea.setBackground(Color.WHITE);
-			textArea.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "STATUS", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			textArea.setDragEnabled(true);
+	private JTextArea getTextArea() {
+		if (taStatus == null) {
+			taStatus = new JTextArea();
+			taStatus.setEditable(false);
+			taStatus.setBackground(Color.WHITE);
+			taStatus.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "STATUS", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
+			taStatus.setDragEnabled(true);
 		}
-		return textArea;
+		return taStatus;
 	}
 	private JButton getBtnDodajKurs() {
 		if (btnDodajKurs == null) {
 			btnDodajKurs = new JButton("Dodaj kurs");
 			btnDodajKurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dodajKurs();
+					GUIKontroler.dodajKurs();
 				}
 			});
 		}
@@ -253,7 +227,7 @@ public class MenjacnicaGUI extends JFrame {
 			btnIzvrsiZamenu = new JButton("Izvrsi zamenu");
 			btnIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					izvrsiZamenu();
+					GUIKontroler.izvrsiZamenu();
 				}
 			});
 		}
@@ -273,7 +247,7 @@ public class MenjacnicaGUI extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-					"Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni", "Naziv"
+					"", "", "", "", "", ""
 				}
 			));
 			table.setFillsViewportHeight(true);
@@ -312,7 +286,7 @@ public class MenjacnicaGUI extends JFrame {
 			mntmDodajKurs = new JMenuItem("Dodaj kurs");
 			mntmDodajKurs.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					dodajKurs();
+					GUIKontroler.dodajKurs();
 				}
 			});
 		}
@@ -329,36 +303,14 @@ public class MenjacnicaGUI extends JFrame {
 			mntmIzvrsiZamenu = new JMenuItem("Izvrsi zamenu");
 			mntmIzvrsiZamenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					izvrsiZamenu();
+					GUIKontroler.izvrsiZamenu();
 				}
 			});
 		}
 		return mntmIzvrsiZamenu;
 	}
 	
-	public static void ugasiAplikaciju() {
-		int opcija = JOptionPane.showConfirmDialog(null, "Da li zelite da izadjete iz programa?", "Zatvaranje aplikacije...", JOptionPane.YES_NO_CANCEL_OPTION);
-		if(opcija == JOptionPane.YES_OPTION)
-			System.exit(0);
-	}
+
 	
-	public static void dodajKurs() {
-			try {
-				DodajKursGUI dk = new DodajKursGUI();
-				dk.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
-	public static void izvrsiZamenu() {
-			try {
-				IzvrsiZamenuGUI iz = new IzvrsiZamenuGUI();
-				iz.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-	}
-	public static void ispisiStatus(String tekst) {
-		textArea.append(tekst + "\n");
-	}
+
 }

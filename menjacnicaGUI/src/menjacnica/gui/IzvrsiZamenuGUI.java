@@ -220,7 +220,7 @@ public class IzvrsiZamenuGUI extends JFrame {
 					}
 					
 					String status = "Valuta: " + valuta + "; Iznos: " + iznos + "; Prodaja/Kupovina: " + radnja + ".";
-					MenjacnicaGUI.ispisiStatus(status);
+					GUIKontroler.ispisiStatus(status);
 				}
 			});
 			btnIzvrsiZamenu.setBounds(17, 235, 170, 28);

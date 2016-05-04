@@ -112,7 +112,7 @@ public class DodajKursGUI extends JFrame {
 					
 					String dodajKurs = "Sifra: " + sifra + "; Naziv: " + naziv + "; Prodajni kurs: " + prodajniKurs
 							 + "; Kupovni kurs: "+ kupovniKurs + "; Srednji kurs: " + srednjiKurs + "; Skraceni naziv: " + skraceniNaziv + ".";
-					MenjacnicaGUI.ispisiStatus(dodajKurs);
+					GUIKontroler.ispisiStatus(dodajKurs);
 				}
 			});
 		}
