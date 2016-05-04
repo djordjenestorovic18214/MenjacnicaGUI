@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 public class KursTableModel extends AbstractTableModel{
 
 	public final String[] kolone = new String[]{"Sifra", "Skraceni naziv", "Prodajni", "Srednji", "Kupovni", "Naziv"};
+	public LinkedList<Kurs> kursevi;
 
 	public int getColumnCount() {
 		return kolone.length;
